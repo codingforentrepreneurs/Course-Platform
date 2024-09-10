@@ -1,3 +1,4 @@
+from cloudinary import CloudinaryImage
 from django.contrib import admin
 from django.utils.html import format_html
 # Register your models here.
@@ -13,7 +14,10 @@ class CourseAdmin(admin.ModelAdmin):
 
     def display_image(self, obj, *args, **kwargs):
         url = obj.image.url
-        return format_html(f"<img src='{url}' />")
+        cloudinary_id = str(obj.image)
+        cloudinary_html2 = obj.image.image(width=200)
+        cloudinary_html = CloudinaryImage(cloudinary_id).image(width=500)
+        return format_html(cloudinary_html2)
 
     display_image.short_description = "Current Image"
 
