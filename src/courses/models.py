@@ -29,6 +29,10 @@ class PublishStatus(models.TextChoices):
 def handle_upload(instance, filename):
     return f"{filename}"
 
+# from courses.models import Course
+# Course.objects.all() -> list out all courses
+# Course.objects.first() -> first row of all courses
+
 class Course(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)

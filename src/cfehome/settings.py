@@ -117,9 +117,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# whitenoise
+# whitenoise/nginx
 STATIC_URL = "static/"
 
+# nginx
 MEDIA_URL = "media/"
 MEDIA_ROOT = LOCAL_CDN / "media"
 
