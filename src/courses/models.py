@@ -40,6 +40,42 @@ class Course(models.Model):
     @property
     def is_published(self):
         return self.status == PublishStatus.PUBLISHED
+    
+    @property
+    def image_admin_url(self):
+        if not self.image:
+            return ""
+        image_options = {
+            "width": 200
+        }
+        url = self.image.build_url(**image_options)
+        return url
+
+    def get_image_thumbnail(self, as_html=False, width=500):
+        if not self.image:
+            return ""
+        image_options = {
+            "width": width
+        }
+        if as_html:
+            # CloudinaryImage(str(self.image)).image(**image_options)
+            return self.image.image(**image_options)
+        # CloudinaryImage(str(self.image)).build_url(**image_options)
+        url = self.image.build_url(**image_options)
+        return url
+    
+    def get_image_detail(self, as_html=False, width=750):
+        if not self.image:
+            return ""
+        image_options = {
+            "width": width
+        }
+        if as_html:
+            # CloudinaryImage(str(self.image)).image(**image_options)
+            return self.image.image(**image_options)
+        # CloudinaryImage(str(self.image)).build_url(**image_options)
+        url = self.image.build_url(**image_options)
+        return url
 
 
 

@@ -13,11 +13,8 @@ class CourseAdmin(admin.ModelAdmin):
     readonly_fields = ['display_image']
 
     def display_image(self, obj, *args, **kwargs):
-        url = obj.image.url
-        cloudinary_id = str(obj.image)
-        cloudinary_html2 = obj.image.image(width=200)
-        cloudinary_html = CloudinaryImage(cloudinary_id).image(width=500)
-        return format_html(cloudinary_html2)
+        url = obj.image_admin_url
+        return format_html(f"<img src={url} />")
 
     display_image.short_description = "Current Image"
 
