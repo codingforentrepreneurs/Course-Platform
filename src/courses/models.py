@@ -1,20 +1,7 @@
+import helpers
 from django.db import models
 
-"""
-- Courses:
-	- Title
-	- Description
-	- Thumbnail/Image
-	- Access:
-		- Anyone
-		- Email required
-        - Purchase required
-		- User required (n/a)
-	- Status: 
-		- Published
-		- Coming Soon
-		- Draft
-"""
+helpers.cloudinary_init()
 
 class AccessRequirement(models.TextChoices):
     ANYONE = "any", "Anyone"
