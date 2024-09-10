@@ -1,5 +1,5 @@
 .DS_Store
-local-cdn 
+local-cdn/media/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
