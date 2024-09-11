@@ -36,6 +36,8 @@ class Course(models.Model):
         choices=PublishStatus.choices,
         default=PublishStatus.DRAFT
         )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     @property
     def is_published(self):
@@ -98,6 +100,7 @@ class Course(models.Model):
 # ne_course_obj = lesson_obj.course
 # ne_course_lessons = ne_course_obj.lesson_set.all()
 # lesson_obj.course_id
+# course_obj.lesson_set.all().order_by("-title")
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -106,9 +109,15 @@ class Lesson(models.Model):
     description = models.TextField(blank=True, null=True)
     thumbnail = CloudinaryField("image", blank=True, null=True)
     video = CloudinaryField("video", blank=True, null=True, resource_type='video')
+    order = models.IntegerField(default=0)
     can_preview = models.BooleanField(default=False, help_text="If user does not have access to course, can they see this?")
     status = models.CharField(
         max_length=10, 
         choices=PublishStatus.choices,
         default=PublishStatus.PUBLISHED
     )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', '-updated']
