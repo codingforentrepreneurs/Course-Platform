@@ -1,5 +1,7 @@
+import uuid
 import helpers
 from django.db import models
+from django.utils.text import slugify
 from cloudinary.models import CloudinaryField
 
 helpers.cloudinary_init()
@@ -21,11 +23,34 @@ def handle_upload(instance, filename):
 # Course.objects.all() -> list out all courses
 # Course.objects.first() -> first row of all courses
 
+def get_public_id_prefix(instance, *args, **kwargs):
+    title = instance.title
+    if title:
+        slug = slugify(title)
+        unique_id = str(uuid.uuid4()).replace("-", "")[:5]
+        return f"courses/{slug}-{unique_id}"
+    if instance.id:
+        return f"courses/{instance.id}"
+    return "courses"
+
+
+def get_diplay_name(instance, *args, **kwargs):
+    title = instance.title
+    if title:
+        return title
+    return "Course Upload"
+
 class Course(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)
     # image = models.ImageField(upload_to=handle_upload, blank=True, null=True)
-    image = CloudinaryField("image", null=True)
+    image = CloudinaryField(
+        "image", 
+        null=True, 
+        public_id_prefix=get_public_id_prefix,
+        display_name=get_diplay_name,
+        tags=["course", "thumbnail"]
+    )
     access = models.CharField(
         max_length=5, 
         choices=AccessRequirement.choices,
