@@ -23,18 +23,23 @@ def handle_upload(instance, filename):
 # Course.objects.all() -> list out all courses
 # Course.objects.first() -> first row of all courses
 
-def get_public_id_prefix(instance, *args, **kwargs):
+def generate_public_id(instance, *args, **kwargs):
     title = instance.title
-    if title:
-        slug = slugify(title)
-        unique_id = str(uuid.uuid4()).replace("-", "")[:5]
-        return f"courses/{slug}-{unique_id}"
-    if instance.id:
-        return f"courses/{instance.id}"
-    return "courses"
+    unique_id = str(uuid.uuid4()).replace("-", "")
+    if not title:
+        return unique_id
+    slug = slugify(title)
+    unique_id_short = unique_id[:5]
+    return f"{slug}-{unique_id_short}"
 
 
-def get_diplay_name(instance, *args, **kwargs):
+def get_public_id_prefix(instance, *args, **kwargs):
+    public_id = instance.public_id
+    if not public_id:
+        return "courses"
+    return f"courses/{public_id}"
+
+def get_display_name(instance, *args, **kwargs):
     title = instance.title
     if title:
         return title
@@ -43,12 +48,14 @@ def get_diplay_name(instance, *args, **kwargs):
 class Course(models.Model):
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)
+    # uuid = models.UUIDField(default=uuid.uuid1, unique=True)
+    public_id = models.CharField(max_length=130, blank=True, null=True)
     # image = models.ImageField(upload_to=handle_upload, blank=True, null=True)
     image = CloudinaryField(
         "image", 
         null=True, 
         public_id_prefix=get_public_id_prefix,
-        display_name=get_diplay_name,
+        display_name=get_display_name,
         tags=["course", "thumbnail"]
     )
     access = models.CharField(
@@ -63,6 +70,13 @@ class Course(models.Model):
         )
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # before save
+        if self.public_id == "" or self.public_id is None:
+            self.public_id = generate_public_id(self)
+        super().save(*args, **kwargs)
+        # after save
 
     @property
     def is_published(self):
@@ -130,6 +144,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     # course_id 
+    public_id = models.CharField(max_length=130, blank=True, null=True)
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)
     thumbnail = CloudinaryField("image", blank=True, null=True)
@@ -146,3 +161,9 @@ class Lesson(models.Model):
 
     class Meta:
         ordering = ['order', '-updated']
+
+    def save(self, *args, **kwargs):
+        # before save
+        if self.public_id == "" or self.public_id is None:
+            self.public_id = generate_public_id(self)
+        super().save(*args, **kwargs)
