@@ -1,2 +1,33 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/2.0.5/cld-video-player.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/2.0.5/cld-video-player.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+<script defer>
+
+    function renderVideoElement(videoPlayerElement) {
+        const currentVideoId = videoPlayerElement.getAttribute('id')
+        const videoPlayerId = `${currentVideoId}` + '-cfe-' + Math.random().toString(36).substr(2, 9);
+        videoPlayerElement.setAttribute("id", videoPlayerId);
+        const cloudName = videoPlayerElement.dataset.cloudName;
+        const videoUrl = videoPlayerElement.dataset.videoUrl;
+        if (cloudName && videoUrl) {
+            const cld = cloudinary.videoPlayer(videoPlayerId, {
+                cloudName: cloudName
+            });
+            cld.source(videoUrl);
+        }
+    }
+
+    function renderAllVideos() {
+        const videoPlayerClassName = 'cfe-video';
+        const videoPlayerElements = document.getElementsByClassName(videoPlayerClassName);
+        console.log(videoPlayerElements);
+        for (let el of videoPlayerElements) {
+            console.log(el);
+            renderVideoElement(el);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderAllVideos)
+</script>

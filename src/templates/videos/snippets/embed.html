@@ -1,4 +1,5 @@
 <video id="demo-player" 
+    class="cfe-video"
     controls 
     autoplay 
     data-video-url="{{ video_url }}"
@@ -7,15 +8,4 @@
     class="cld-video-player cld-video-player-skin-light"
     >
 </video>
-<script>
-    const videoPlayerId = 'demo-player'
-    const videoPlayerElement = document.getElementById(videoPlayerId)
-    if (videoPlayerElement) {
-        const cloudName = videoPlayerElement.dataset.cloudName
-        const videoUrl = videoPlayerElement.dataset.videoUrl
-        const cld = cloudinary.videoPlayer(videoPlayerId, {
-            cloudName: cloudName
-        })
-        cld.source(videoUrl)
-    }
-</script>
+
