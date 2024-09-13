@@ -1,3 +1,15 @@
-<video controls autoplay data-cloud-name="{{ cloud_name }}">
-    <source src="{{ video_url }}" />
+<video id="demo-player" 
+    controls 
+    autoplay 
+    data-video-url="{{ video_url }}"
+    data-cloud-name="{{ cloud_name }}">
 </video>
+<script>
+    const videoPlayerElement = document.getElementById("demo-player")
+    if (videoPlayerElement) {
+        const cloudName = videoPlayerElement.dataset.cloudName
+        const videoUrl = videoPlayerElement.dataset.videoUrl
+        console.log(cloudName, videoUrl)
+    }
+    
+</script>
