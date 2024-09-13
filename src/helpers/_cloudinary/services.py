@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.template.loader import get_template
 
 
 def get_cloudinary_image_object(instance, 
@@ -19,9 +21,7 @@ def get_cloudinary_image_object(instance,
     return url
 
 video_html = """
-<video controls autoplay>
-<source src="{video_url}" />
-</video>
+
 """
 
 def get_cloudinary_video_object(instance, 
@@ -54,7 +54,10 @@ def get_cloudinary_video_object(instance,
     if height and width:
         video_options['crop'] = "limit"
     url = video_object.build_url(**video_options)
-    print(url)
     if as_html:
-        return video_html.format(video_url=url).strip()
+        template_name = "videos/snippets/embed.html"
+        tmpl = get_template(template_name)
+        cloud_name = settings.CLOUDINARY_CLOUD_NAME
+        _html = tmpl.render({'video_url': url, 'cloud_name': cloud_name})
+        return _html
     return url
