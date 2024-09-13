@@ -30,7 +30,7 @@ class LessonInline(admin.StackedInline):
         url = helpers.get_cloudinary_video_object(
             obj, 
             field_name='video',
-            sign_url=False,
+            as_html=True,
             width=550
         )
         return format_html(f"{url}")
