@@ -1,7 +1,7 @@
 <ul class="list-disc"></ul>
     {% for object in queryset %}
     <li>
-        <a class="text-blue-500 hover:text-blue-800 hover:underline" href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+        <a class="text-blue-500 hover:text-blue-800 hover:underline" href="{{ object.get_absolute_url }}">{{ object.title }}</a> {% if object.is_coming_soon %}Coming Soon {% endif %}
     </li>
     {% endfor %}
 </ul>
