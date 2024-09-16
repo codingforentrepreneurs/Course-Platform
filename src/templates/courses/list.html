@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+
+<ul class="list-disc">
+
+    {% for my_obj in object_list %}
+    <li>
+        <a class="text-blue-500 hover:text-blue-800 hover:underline" href="{{ my_obj.get_absolute_url }}">{{ my_obj.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
