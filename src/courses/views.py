@@ -34,5 +34,11 @@ def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs)
     )
     if lesson_obj is None:
         raise Http404
-    return JsonResponse({"data": lesson_obj.id })
-    return render(request, "courses/lesson.html", {})
+    # template_name = "courses/purchase-required.html"
+    template_name = "courses/lesson-coming-soon.html"
+    context = {
+        "object": lesson_obj
+    }
+    if not lesson_obj.is_coming_soon:
+        template_name = "courses/lesson.html"
+    return render(request, template_name, context)
