@@ -4,14 +4,8 @@
 {% block content %}
 
 
+<h1>Courses</h1>
 
-<ul class="list-disc">
-
-    {% for my_obj in object_list %}
-    <li>
-        <a class="text-blue-500 hover:text-blue-800 hover:underline" href="{{ my_obj.get_absolute_url }}">{{ my_obj.title }}</a>
-    </li>
-    {% endfor %}
-</ul>
+{% include 'courses/snippets/list-display.html' with queryset=object_list %}
 
 {% endblock content %}

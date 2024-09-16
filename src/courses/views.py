@@ -18,8 +18,12 @@ def course_detail_view(request, course_id=None, *args, **kwarg):
     if course_obj is None:
         raise Http404
     lessons_queryset = course_obj.lesson_set.all()
-    return JsonResponse({"data": course_obj.id, 'lesson_ids': [x.path for x in lessons_queryset] })
-    return render(request, "courses/detail.html", {})
+    context = {
+        "object": course_obj,
+        "lessons_queryset": lessons_queryset,
+    }
+    # return JsonResponse({"data": course_obj.id, 'lesson_ids': [x.path for x in lessons_queryset] })
+    return render(request, "courses/detail.html", context)
 
 
 def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs):
