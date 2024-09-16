@@ -1,3 +1,4 @@
+import helpers
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 
@@ -39,6 +40,18 @@ def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs)
     context = {
         "object": lesson_obj
     }
-    if not lesson_obj.is_coming_soon:
+    if not lesson_obj.is_coming_soon and lesson_obj.has_video:
+        """
+        Lesson is published
+        Video is available
+        go forward
+        """
         template_name = "courses/lesson.html"
+        video_embed_html = helpers.get_cloudinary_video_object(
+            lesson_obj, 
+            field_name='video',
+            as_html=False,
+            width=1250
+        )
+        context['video_embed'] = video_embed_html
     return render(request, template_name, context)
