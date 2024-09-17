@@ -15,6 +15,26 @@ from pathlib import Path
 from decouple import config # os.environ.get()
 
 
+from decouple import config
+
+# default backend
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config("EMAIL_HOST", cast=str, default=None)
+EMAIL_PORT = config("EMAIL_PORT", cast=str, default='587') # Recommended
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default=None)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default=None)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)  # Use EMAIL_PORT 587 for TLS
+
+ADMIN_USER_NAME=config("ADMIN_USER_NAME", default="Justin")
+ADMIN_USER_EMAIL=config("ADMIN_USER_EMAIL", default=None)
+
+MANAGERS=[]
+ADMINS=[]
+if all([ADMIN_USER_NAME, ADMIN_USER_EMAIL]):
+    ADMINS +=[
+        (f'{ADMIN_USER_NAME}', f'{ADMIN_USER_EMAIL}')
+    ]
+    MANAGERS=ADMINS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

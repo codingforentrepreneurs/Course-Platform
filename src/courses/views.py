@@ -50,7 +50,7 @@ def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs)
         video_embed_html = helpers.get_cloudinary_video_object(
             lesson_obj, 
             field_name='video',
-            as_html=False,
+            as_html=True,
             width=1250
         )
         context['video_embed'] = video_embed_html
