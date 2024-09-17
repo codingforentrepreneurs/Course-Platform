@@ -8,4 +8,6 @@
         <button type="submit">Login</button>
     </form>
     {% endif %}
+{% else %}
+<div hx-get="/hx/logout/" hx-trigger="revealed"></div>
 {% endif %}
