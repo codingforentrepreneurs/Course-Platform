@@ -1,5 +1,11 @@
-<form method="POST" action="."> 
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Login</button>
-</form>
+{% if show_form %}
+    {% if message != "" %}
+    {{ message }}
+    {% else %}
+    <form hx-post="/hx/login/" method="POST" action="."> 
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Login</button>
+    </form>
+    {% endif %}
+{% endif %}

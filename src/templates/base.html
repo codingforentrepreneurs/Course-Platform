@@ -9,6 +9,10 @@
   {% endblock head_title %}</title>
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  <div hx-get="/hx/login/" hx-trigger="load"></div>
+
+  
     {% block content %}
     <h1 class="text-3xl font-bold underline">
         Hello world from base!
