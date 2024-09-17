@@ -8,6 +8,10 @@ class Email(models.Model):
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+# class Purchase(models.Model):
+#     email = models.ForeignKey(Email, on_delete=models.SET_NULL, null=True)
+#     course =  models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+
 
 class EmailVerificationEvent(models.Model):
     parent = models.ForeignKey(Email, on_delete=models.SET_NULL, null=True)
