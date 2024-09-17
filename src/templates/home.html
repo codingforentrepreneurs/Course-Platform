@@ -9,13 +9,7 @@
 {% block content %}
   <h1>Hello World</h1>
 
-  <div>
-    <form method="POST" action="."> 
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Login</button>
-    </form>
-  </div>
+  <div hx-get="/hx/login/" hx-trigger="load"></div>
 
 
 {% endblock content %}

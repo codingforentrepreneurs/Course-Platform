@@ -8,7 +8,7 @@
   <title>{% block head_title %}Hello World from Course Platform
   {% endblock head_title %}</title>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% block content %}
     <h1 class="text-3xl font-bold underline">
         Hello world from base!
