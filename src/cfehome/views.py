@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 
+from emails import services as emails_services
 from emails.models import Email, EmailVerificationEvent
 from emails.forms import EmailForm
 
@@ -16,12 +17,7 @@ def home_view(request, *args, **kwargs):
     }
     if form.is_valid():
         email_val = form.cleaned_data.get('email')
-        email_obj, created = Email.objects.get_or_create(email=email_val)
-        obj = EmailVerificationEvent.objects.create(
-            parent=email_obj,
-            email=email_val
-        )
-        # obj = form.save()
+        obj = emails_services.start_verification_event(email_val)
         print(obj)
         context['form'] = EmailForm()
         context['message'] = f"Succcess! Check your email for verification from {EMAIL_ADDRESS}"
