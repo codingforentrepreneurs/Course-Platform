@@ -9,7 +9,9 @@ module.exports = {
         // Include JavaScript files that might contain Tailwind CSS classes
         '../../**/*.js',
         // Include Python files that might contain Tailwind CSS classes
-        '../../**/*.py'
+        '../../**/*.py',
+        // Include flowbite files
+        "./node_modules/flowbite/**/*.js"
     ],
     theme: {
         extend: {},
@@ -23,5 +25,6 @@ module.exports = {
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
         require('@tailwindcss/aspect-ratio'),
+        require('flowbite/plugin')
     ],
 }
