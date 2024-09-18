@@ -14,12 +14,13 @@
   {% include 'base/navbar.html' %}
   
 
-  
+    <div class="{% if '/logout' in request.path or '/login' in request.path%} {% else %}px-4 mx-auto max-w-screen-xl{% endif %}">
     {% block content %}
     <h1 class="text-3xl font-bold underline">
         Hello world from base!
       </h1>
     {% endblock content %}
+  </div>
     {% include 'base/js.html' %}
 </body>
 </html>
