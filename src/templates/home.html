@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-    Hello World from Home Page on Course Platform
+    Welcome to the Course Platform
   {% endblock head_title %}
 
 
 
 {% block content %}
-  <h1>Hello World</h1>
+{% include 'base/hero.html' %}
 
-  
+
+<hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+<section class="bg-white dark:bg-gray-900">
+  <div class="">
+      <div class="mx-auto max-w-screen-sm text-center lg:mb-4 mb-2">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Courses</h2>
+          <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">We have awesome courses.</p>
+      </div> 
+      
+<div hx-get="/courses/" hx-trigger="revealed"></div>
+  </div>
+</section>
+
 
 
 {% endblock content %}

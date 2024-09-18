@@ -6,12 +6,14 @@ from . import services
 
 def course_list_view(request):
     queryset = services.get_publish_courses()
-    print(queryset)
-    # return JsonResponse({"data": [x.path for x in queryset]})
     context = {
         "object_list": queryset
     }
-    return render(request, "courses/list.html", context)
+    template_name = "courses/list.html"
+    if request.htmx:
+        template_name = "courses/snippets/list-display.html"
+        context['queryset'] = queryset[:3]
+    return render(request, template_name, context)
 
 
 def course_detail_view(request, course_id=None, *args, **kwarg):
