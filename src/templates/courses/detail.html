@@ -4,9 +4,32 @@
 {% block content %}
 
 
-<h1>{{ object.title }}</h1>
+<section class="bg-white dark:bg-gray-900"></section>
+    <div class="py-8 lg:py-16 space-y-8 lg:space-y-16">
+        <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ object.title }}</h2>
+        </div> 
+
+        <div class="flex justify-center items-center">
+            <img src="{{ object.get_display_image}}" width="750" />
+        </div>
+        <div class="flex justify-center items-center">
+            <div class="max-lg-w">
+                {{ object.description|linebreaks }}
+            </div>
+        </div>
+
+    </div>
+  </section>
 
 
-{% include 'courses/snippets/list-display.html' with queryset=lessons_queryset %}
 
+<section class="bg-white dark:bg-gray-900"></section>
+    <div class="">
+        <div class="mx-auto max-w-screen-sm text-center">
+            <h2 class="mb-4 text-lg lg:text-xl tracking-tight font-extrabold text-gray-900 dark:text-white">Lessons</h2>
+        </div> 
+        {% include 'courses/snippets/list-display.html' with queryset=lessons_queryset %}
+    </div>
+  </section>
 {% endblock content %}
