@@ -212,11 +212,21 @@ class Lesson(models.Model):
         return self.video is not None
     
     def get_thumbnail(self):
-        if not self.thumbnail:
-            return None
-        return helpers.get_cloudinary_image_object(
+        width = 382
+        if self.thumbnail:
+            return helpers.get_cloudinary_image_object(
+                self, 
+                field_name='thumbnail',
+                format='jpg',
+                as_html=False,
+                width=width
+            )
+        elif self.video:
+            return helpers.get_cloudinary_image_object(
             self, 
-            field_name='thumbnail',
+            field_name='video',
+            format='jpg',
             as_html=False,
-            width=382
+            width=width
         )
+        return 
