@@ -66,9 +66,17 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third party
     "django_htmx",
+    "tailwind",
+    "theme", # django-tailwind theme app
     # internal
     "courses",
     "emails"
+]
+
+TAILWIND_APP_NAME="theme" # django-tailwind theme app
+INTERNAL_IPS = [
+    "0.0.0.0",
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -81,6 +89,11 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
+
+if DEBUG:
+    # django-tailwind theme app
+    INSTALLED_APPS.append('django_browser_reload')
+    MIDDLEWARE.append("django_browser_reload.middleware.BrowserReloadMiddleware")
 
 ROOT_URLCONF = "cfehome.urls"
 

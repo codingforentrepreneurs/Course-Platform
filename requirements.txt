@@ -3,3 +3,4 @@ pillow
 cloudinary
 python-decouple
 django-htmx
+django-tailwind[reload]
